@@ -1,0 +1,19 @@
+{
+  "name": "@google/gemini-cli-local-history",
+  "version": "0.0.1",
+  "description": "Local history for gemini-cli",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node ../../scripts/build_package.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^11.1.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11"
+  }
+}

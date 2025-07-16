@@ -25,6 +25,7 @@ import { Settings } from './settings.js';
 import { Extension, filterActiveExtensions } from './extension.js';
 import { getCliVersion } from '../utils/version.js';
 import { loadSandboxConfig } from './sandboxConfig.js';
+import { historyCommand } from '../commands/history.js';
 
 // Simple console logger for now - replace with actual logger if available
 const logger = {
@@ -57,6 +58,7 @@ export interface CliArgs {
   extensions: string[] | undefined;
   listExtensions: boolean | undefined;
   ideMode: boolean | undefined;
+  _: (string | number)[];
 }
 
 export async function parseArguments(): Promise<CliArgs> {
@@ -195,7 +197,10 @@ export async function parseArguments(): Promise<CliArgs> {
         );
       }
       return true;
-    });
+    })
+    .command(historyCommand)
+    .demandCommand(1, 'You need at least one command before moving on')
+    .exitProcess(true);
 
   yargsInstance.wrap(yargsInstance.terminalWidth());
   return yargsInstance.argv;

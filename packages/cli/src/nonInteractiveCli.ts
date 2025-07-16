@@ -18,6 +18,7 @@ import {
   FunctionCall,
   GenerateContentResponse,
 } from '@google/genai';
+import { saveHistory } from '@google/gemini-cli-local-history';
 
 import { parseAndFormatApiError } from './ui/utils/errorParsing.js';
 
@@ -153,6 +154,14 @@ export async function runNonInteractive(
         currentMessages = [{ role: 'user', parts: toolResponseParts }];
       } else {
         process.stdout.write('\n'); // Ensure a final newline
+        const responsePart = currentMessages[0]?.parts?.[0];
+        if (responsePart && 'text' in responsePart) {
+          saveHistory({
+            session_id: prompt_id,
+            request: input,
+            response: responsePart.text || '',
+          });
+        }
         return;
       }
     }
